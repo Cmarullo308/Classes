@@ -1,4 +1,5 @@
 package Tools;
+
 public class MyFuncs {
 	// Char Class
 	public static class Chars {
@@ -41,18 +42,16 @@ public class MyFuncs {
 	// Random Class
 	public static class Random {
 		public static int randomIntBetween(int min, int max) {
-			java.util.Random rand = new java.util.Random();
-			return rand.nextInt(max - min + 1) + min;
+			return new java.util.Random().nextInt(max - min + 1) + min;
 		}
 
 		public static double randomDoubleBetween(double min, double max) {
-			java.util.Random rand = new java.util.Random();
-			return min + (max - min) * rand.nextDouble();
+			return min + (max - min) * new java.util.Random().nextDouble();
 		}
 
 		public static double randomDoubleBetween(double min, double max, int decimalPoints) {
-			java.util.Random rand = new java.util.Random();
-			return Double.parseDouble(String.format("%." + decimalPoints + "f", min + (max - min) * rand.nextDouble()));
+			return Double.parseDouble(
+					String.format("%." + decimalPoints + "f", min + (max - min) * new java.util.Random().nextDouble()));
 		}
 	}
 
