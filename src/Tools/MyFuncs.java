@@ -97,9 +97,10 @@ public class MyFuncs {
 				quickSortDESC(strArr, 0, strArr.length - 1);
 			}
 		}
-		
+
 		/**
 		 * Quicksorts the String arry by length accending
+		 * 
 		 * @param strArr
 		 * @param low
 		 * @param high
@@ -129,6 +130,7 @@ public class MyFuncs {
 
 		/**
 		 * Quicksorts the String arry by length decending
+		 * 
 		 * @param strArr
 		 * @param low
 		 * @param high
@@ -164,6 +166,40 @@ public class MyFuncs {
 			String temp = strArr[i];
 			strArr[i] = strArr[j];
 			strArr[j] = temp;
+		}
+
+		/**
+		 * 
+		 * @param string
+		 *            The string to search
+		 * @param needle
+		 *            What is being searched for in the strinf
+		 * @return True if the substring is found
+		 */
+		public static boolean containsIgnoreCase(String string, String needle) {
+			for (int i = 0; i < string.length() - needle.length() + 1; i++) {
+				if (string.substring(i, i + needle.length()).equalsIgnoreCase(needle)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
+		 * 
+		 * @param string
+		 *            The string to search
+		 * @param needle
+		 *            What is being searched for in the strinf
+		 * @return True if the substring is found
+		 */
+		public static boolean contains(String string, String needle) {
+			for (int i = 0; i < string.length() - needle.length() + 1; i++) {
+				if (string.substring(i, i + needle.length()).equals(needle)) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 
