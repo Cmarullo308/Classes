@@ -10,7 +10,7 @@ public class Classes {
 	public static void main(String[] args) {
 		String[] strArr = {"DerpAss", "Ass", "Shit", "a", "ddddddddddd"};
 		
-		MyFuncs.Strings.sortArrayByLength(strArr, MyFuncs.Sort.DESC);
+		MyFuncs.Strings.sortArrayByLength(strArr, MyFuncs.Sort.ASCE);
 		
 		for(String s : strArr) {
 			Print.pl(s);
