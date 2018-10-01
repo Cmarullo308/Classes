@@ -1,7 +1,12 @@
 package Tools;
 
 public class MyFuncs {
-	// Char Class
+	public enum Sort {
+		ASCE, DESC;
+	}
+
+	// ----------Char Class----------
+
 	public static class Chars {
 		public static char switchCase(char c) {
 			if (c >= 65 && c <= 90) { // if Uppercase
@@ -39,7 +44,8 @@ public class MyFuncs {
 
 	}
 
-	// Random Class
+	// ----------Random Class----------
+
 	public static class Random {
 		public static int randomIntBetween(int min, int max) {
 			return new java.util.Random().nextInt(max - min + 1) + min;
@@ -55,7 +61,11 @@ public class MyFuncs {
 		}
 	}
 
+	// ----------Strings Class----------
+
 	public static class Strings {
+		private static String[] tempStrArr;
+
 		public static String reverseChars(String str) {
 			char[] charArr = new char[str.length()];
 
@@ -76,7 +86,101 @@ public class MyFuncs {
 
 			return zeros + num;
 		}
+
+		/**
+		 * Sorts the array by length
+		 * 
+		 * @param strArr
+		 */
+		public static void sortArrayByLength(String[] strArr, Sort sort) {
+			tempStrArr = strArr;
+			if (sort == Sort.ASCE) {
+				quickSortASEC(0, tempStrArr.length - 1);
+			} else if (sort == Sort.DESC) {
+				quickSortDESC(0, tempStrArr.length - 1);
+			}
+		}
+
+		private static void quickSortASEC(int low, int high) {
+			int i = low;
+			int j = high;
+			String pivot = tempStrArr[low + (high - low) / 2];
+			while (i <= j) {
+				while (tempStrArr[i].length() < pivot.length()) {
+					i++;
+				}
+				while (tempStrArr[j].length() > pivot.length()) {
+					j--;
+				}
+				if (i <= j) {
+					exchangeNumbers(i, j);
+					i++;
+					j--;
+				}
+			}
+			if (low < j)
+				quickSortASEC(low, j);
+			if (i < high)
+				quickSortASEC(i, high);
+		}
+
+		private static void quickSortDESC(int low, int high) {
+			int i = low;
+			int j = high;
+			String pivot = tempStrArr[(low + high) / 2];
+
+			while (i < j) {
+				while (tempStrArr[i].length() > pivot.length()) {
+					i++;
+				}
+				while (tempStrArr[j].length() < pivot.length()) {
+					j--;
+				}
+				if (j >= i) {
+					exchangeNumbers(i, j);
+					i++;
+					j--;
+				}
+			}
+
+			if (low < j) {
+				quickSortDESC(low, j);
+			}
+			if (i < high) {
+				quickSortDESC(i, high);
+			}
+		}
+		// private static void quickSortDESC(int low, int high) {
+		// int i = low;
+		// int j = high;
+		// String pivot = tempStrArr[low + (high - low) / 2];
+		// while (i <= j) {
+		// while (tempStrArr[i].length() > pivot.length()) {
+		// i++;
+		// }
+		// while (tempStrArr[j].length() < pivot.length()) {
+		// j--;
+		// }
+		// if (i <= j) {
+		// exchangeNumbers(i, j);
+		// i++;
+		// j--;
+		// }
+		// }
+		// if (low < j)
+		// quickSortASEC(low, j);
+		// if (i < high)
+		// quickSortASEC(i, high);
+		// }
+
+		private static void exchangeNumbers(int i, int j) {
+			String temp = tempStrArr[i];
+			tempStrArr[i] = tempStrArr[j];
+			tempStrArr[j] = temp;
+		}
 	}
+
+	// ----------Arrays Class----------
 
 	public static class Arrays {
 		public static <T> void reverseArray(T[] arr) {
