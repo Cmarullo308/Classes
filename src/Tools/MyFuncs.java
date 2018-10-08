@@ -147,7 +147,7 @@ public class MyFuncs {
 				while (strArr[j].length() < pivot.length()) {
 					j--;
 				}
-				if (j >= i) {
+				if (i <= j) {
 					exchangeNumbers(strArr, i, j);
 					i++;
 					j--;

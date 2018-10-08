@@ -1,5 +1,6 @@
 package Tools.Dice;
 
+import java.util.Comparator;
 import java.util.Random;
 
 public class Die {
@@ -8,14 +9,30 @@ public class Die {
 
 	public Die() {
 		this.numberOfSides = 6;
+		this.landedOn = -1;
 	}
 
 	public Die(int numberOfSides) {
 		this.numberOfSides = numberOfSides;
+		this.landedOn = -1;
+	}
+
+	public Die(Die die) {
+		this.numberOfSides = die.numberOfSides;
+		this.landedOn = die.landedOn;
 	}
 
 	public int roll() {
 		return landedOn = new Random().nextInt(numberOfSides) + 1;
+	}
+
+	public String toString() {
+		String output = "D" + numberOfSides + " : ";
+		if (landedOn != -1) {
+			return output += landedOn;
+		} else {
+			return output + "Null";
+		}
 	}
 
 	public boolean isMaxNumber() {
