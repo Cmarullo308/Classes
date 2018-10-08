@@ -6,6 +6,9 @@ public class Time {
 	private int hour;
 	private int minute;
 	private int second;
+	private int millisecond;
+
+	private boolean showMilliseconds;
 
 	public enum Format {
 		CLOCK24, CLOCK12AM, CLOCK12PM;
@@ -17,12 +20,23 @@ public class Time {
 		hour = 0;
 		minute = 0;
 		second = 0;
+		millisecond = 0;
 		format = Format.CLOCK24;
+		showMilliseconds = false;
 	}
 
-	public Time(int hour, int minute, int second, Format format) throws InvalidTimeException {
+	/**
+	 * 
+	 * @param hour
+	 * @param minute
+	 * @param second
+	 * @param millisecond
+	 * @param format
+	 * @throws InvalidTimeException
+	 */
+	public Time(int hour, int minute, int second, int millisecond, Format format) throws InvalidTimeException {
 		try {
-			validTime(hour, minute, second, format);
+			validTime(hour, minute, second, millisecond, format);
 		} catch (InvalidTimeException e) {
 			throw e;
 		}
@@ -30,10 +44,13 @@ public class Time {
 		this.hour = hour;
 		this.minute = minute;
 		this.second = second;
+		this.millisecond = millisecond;
 		this.format = format;
+		showMilliseconds = false;
 	}
 
-	private void validTime(int hour, int minute, int second, Format format) throws InvalidTimeException {
+	private void validTime(int hour, int minute, int second, int millisecond, Format format)
+			throws InvalidTimeException {
 		// Check Hour
 		if (format.equals(Format.CLOCK24)) { // If 24hour clock
 			if (hour > 23 || hour < 0) {
@@ -54,6 +71,11 @@ public class Time {
 		if (second < 0 || second > 59) {
 			throw new InvalidTimeException("Second must be between 0 and 59. Recieved: " + second);
 		}
+
+		// Check Millisecond
+		if (millisecond < 0 || millisecond > 999) {
+			throw new InvalidTimeException("Millisecond must be between 0 and 999. Recieved: " + millisecond);
+		}
 	}
 
 	public int getHour() {
@@ -64,7 +86,7 @@ public class Time {
 		boolean validTime = true;
 
 		try {
-			validTime(hour, this.minute, this.second, this.format);
+			validTime(hour, this.minute, this.second, this.millisecond, this.format);
 		} catch (InvalidTimeException e) {
 			e.printStackTrace();
 			validTime = false;
@@ -83,7 +105,7 @@ public class Time {
 		boolean validTime = true;
 
 		try {
-			validTime(this.hour, minute, this.second, this.format);
+			validTime(this.hour, minute, this.second, this.millisecond, this.format);
 		} catch (InvalidTimeException e) {
 			e.printStackTrace();
 			validTime = false;
@@ -102,7 +124,7 @@ public class Time {
 		boolean validTime = true;
 
 		try {
-			validTime(this.hour, this.minute, second, this.format);
+			validTime(this.hour, this.minute, second, this.millisecond, this.format);
 		} catch (InvalidTimeException e) {
 			e.printStackTrace();
 			validTime = false;
@@ -113,8 +135,31 @@ public class Time {
 		}
 	}
 
+	public int getMillisecond() {
+		return this.millisecond;
+	}
+
+	public void setMillisecond(int millisecond) {
+		boolean validTime = true;
+
+		try {
+			validTime(this.hour, this.minute, this.second, millisecond, this.format);
+		} catch (InvalidTimeException e) {
+			e.printStackTrace();
+			validTime = false;
+		}
+
+		if (validTime) {
+			this.millisecond = millisecond;
+		}
+	}
+
 	public Format getFormat() {
 		return format;
+	}
+
+	public void showMilliseconds(boolean showMilliseconds) {
+		this.showMilliseconds = showMilliseconds;
 	}
 
 	public void switchAMPM() {
@@ -180,6 +225,19 @@ public class Time {
 		}
 	}
 
+	public void addMillisecond(int add) {
+		if (add > 0) {
+			millisecond += add;
+		} else {
+			return;
+		}
+
+		while (millisecond > 999) {
+			millisecond -= 1000;
+			addSecond(1);
+		}
+	}
+
 	public void addHour(int add) {
 		if (add > 0) {
 			hour += add;
@@ -232,6 +290,17 @@ public class Time {
 			time += "0" + second;
 		} else {
 			time += second;
+		}
+		
+		if (showMilliseconds) {
+			time += ":";
+			if (millisecond > 99) {
+				time += millisecond;
+			} else if (millisecond < 100 && millisecond > 9) {
+				time += "0" + millisecond;
+			} else {
+				time += "00" + millisecond;
+			}
 		}
 
 		if (!format.equals(Format.CLOCK24)) {

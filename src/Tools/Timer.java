@@ -1,4 +1,5 @@
 package Tools;
+
 public class Timer {
 	long beforeTime;
 	long afterTime;
@@ -75,10 +76,10 @@ public class Timer {
 	public long getTime() {
 		if (!isPauseTimer) { // Time from normal timer
 			if ((running) || (!running && pauseTimer.running)) {
-				//Print.pl("one");
+				// Print.pl("one");
 				return System.currentTimeMillis() - beforeTime - getPausedTime();
 			} else if (!running && !pauseTimer.running) {
-				//Print.pl("two");
+				// Print.pl("two");
 				return afterTime - beforeTime - getPausedTime();
 			}
 		} else if (isPauseTimer) {
@@ -90,6 +91,64 @@ public class Timer {
 		}
 		Print.pl("fail");
 		return 0;// Shouldn't happen
+	}
+
+	public String getTimeFormated() {
+		if ((running) || (!running && pauseTimer.running)) {
+			return convertMilliseconds(System.currentTimeMillis() - beforeTime - getPausedTime());
+		} else if (!running && !pauseTimer.running) {
+			return convertMilliseconds(afterTime - beforeTime - getPausedTime());
+		}
+
+		return "¯\\_(ツ)_/¯";
+	}
+	
+	private String convertMilliseconds(long firstMilliseconds) {
+		String result = "";
+		
+		long hours;
+		int minutes;
+		int seconds;
+		int milliseconds;
+
+		hours = (firstMilliseconds / 3600000);
+		if (hours >= 1) {
+			result += "Hours: " + hours;
+			firstMilliseconds -= 3600000 * hours;
+		} else {
+			result += "Hours: " + 0;
+		}
+		
+		result += " - ";
+
+		minutes = (int) (firstMilliseconds / 60000);
+		if (minutes >= 1) {
+			result += "Minutes: " + hours;
+			firstMilliseconds -= 60000 * minutes;
+		} else {
+			result += "Minutes: " + 0;
+		}
+
+		result += " - ";
+		
+		seconds = (int) (firstMilliseconds / 1000);
+		if (seconds >= 1) {
+			result += "Seconds: " + seconds;
+			firstMilliseconds -= 1000 * seconds;
+		} else {
+			result += "Seconds: " + 0;			
+		}
+		
+		result += " - ";
+		
+		milliseconds = (int) firstMilliseconds;
+		if(milliseconds >= 1) {
+			result += "Milliseconds: " + milliseconds;
+		} else {
+			result += "Milliseconds: " + 0;
+		}
+		
+		return result;
 	}
 
 	private long getPausedTime() {

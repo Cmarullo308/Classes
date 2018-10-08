@@ -1,19 +1,48 @@
 package main;
 
-import java.util.Arrays;
-
-import Tools.BaseConverter;
-import Tools.MyFuncs;
+import Tools.Die;
 import Tools.Print;
+import Tools.Timer;
 
 public class Classes {
 	public static void main(String[] args) {
-		String[] strArr = {"DerpAss", "Ass", "Shit", "a", "ddddddddddd"};
+		Timer timer = new Timer();
 		
-		MyFuncs.Strings.sortArrayByLength(strArr, MyFuncs.Sort.ASCE);
-		
-		for(String s : strArr) {
-			Print.pl(s);
+		Die[] die = new Die[5];
+
+		for (int i = 0; i < die.length; i++) {
+			die[i] = new Die();
 		}
+
+		boolean done = false;
+		int count = 1;
+
+		
+		timer.start();
+		while (!done) {
+			Print.pl("-----------" + "Attempt: " + count + "-------------");
+			for (int i = 0; i < die.length; i++) {
+				Print.pl(die[i].roll());
+			}
+
+			if (allMaxed(die)) {
+				done = true;
+				timer.stop();
+			} else {
+				count++;
+			}
+		}
+		
+		Print.pl(timer.getTime());
+	}
+
+	private static boolean allMaxed(Die[] die) {
+		for (int i = 0; i < die.length; i++) {
+			if (!die[i].isMaxNumber()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }

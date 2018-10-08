@@ -2,7 +2,7 @@ package Tools;
 
 public class MyFuncs {
 	public enum Sort {
-		ASCE, DESC;
+		Ascending, Descending;
 	}
 
 	// ----------Char Class----------
@@ -91,9 +91,9 @@ public class MyFuncs {
 		 * @param strArr
 		 */
 		public static void sortArrayByLength(String[] strArr, Sort sort) {
-			if (sort == Sort.ASCE) {
+			if (sort == Sort.Ascending) {
 				quickSortASEC(strArr, 0, strArr.length - 1);
-			} else if (sort == Sort.DESC) {
+			} else if (sort == Sort.Descending) {
 				quickSortDESC(strArr, 0, strArr.length - 1);
 			}
 		}
