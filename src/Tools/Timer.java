@@ -123,7 +123,7 @@ public class Timer {
 
 		minutes = (int) (firstMilliseconds / 60000);
 		if (minutes >= 1) {
-			result += "Minutes: " + hours;
+			result += "Minutes: " + minutes;
 			firstMilliseconds -= 60000 * minutes;
 		} else {
 			result += "Minutes: " + 0;
