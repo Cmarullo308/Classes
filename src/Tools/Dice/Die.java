@@ -1,4 +1,4 @@
-package Tools;
+package Tools.Dice;
 
 import java.util.Random;
 
